@@ -27,18 +27,18 @@
   },
   "scripts": {
     "analyze": "cross-env ANALYZE_MODE=true NODE_ENV=production webpack",
-    "build": "run-s clean getcapabilities build:config build:dev",
-    "build:verbose": "run-s clean getcapabilities:verbose build:config:verbose build:dev",
-    "build:debug": "run-s clean getcapabilities:debug build:config:debug build:dev",
-    "build:nocache": "run-s clean getcapabilities:nocache build:config:nocache build:dev",
-    "build:ci": "run-s getcapabilities build:config build:prod",
-    "build:options": "bash tasks/buildOptions.sh",
-    "build:config": "run-s build:options && node ./tasks/util/config.js",
-    "build:config:verbose": "run-s build:options -- -v && node ./tasks/util/config.js",
-    "build:config:debug": "run-s build:options -- -d && node ./tasks/util/config.js",
-    "build:config:nocache": "run-s build:options -- -f && node ./tasks/util/config.js",
-    "build:dev": "cross-env NODE_ENV=development webpack",
-    "build:prod": "cross-env NODE_ENV=production webpack",
+    "build": "node init && run-s clean getcapabilities build:config build:dev",
+    "build:verbose": "node init && run-s clean getcapabilities:verbose build:config:verbose build:dev",
+    "build:debug": "node init && run-s clean getcapabilities:debug build:config:debug build:dev",
+    "build:nocache": "node init && run-s clean getcapabilities:nocache build:config:nocache build:dev",
+    "build:ci": "node init && run-s getcapabilities build:config build:prod",
+    "build:options": "node init && bash tasks/buildOptions.sh",
+    "build:config": "node init && run-s build:options && node ./tasks/util/config.js",
+    "build:config:verbose": "node init && run-s build:options -- -v && node ./tasks/util/config.js",
+    "build:config:debug": "node init && run-s build:options -- -d && node ./tasks/util/config.js",
+    "build:config:nocache": "node init && run-s build:options -- -f && node ./tasks/util/config.js",
+    "build:dev": "node init && cross-env NODE_ENV=development webpack",
+    "build:prod": "node init && cross-env NODE_ENV=production webpack",
     "clean": "node ./tasks/util/clean.js",
     "dist": "run-s clean getcapabilities build:config build:prod && node ./tasks/util/dist.js",
     "dist:dev": "run-s clean getcapabilities build:config build:dev && node ./tasks/util/dist.js",
@@ -63,7 +63,7 @@
     "lint:js": "npx eslint .",
     "preinstall": "node tasks/util/checkNodeVersion.js",
     "postinstall": "husky",
-    "start": "node ./tasks/util/start.js",
+    "start": "node init && node ./tasks/util/start.js",
     "t-debug": "npx playwright test --debug",
     "test": "run-script-os",
     "test:unit:tag": "node ./tasks/util/runSingleUnitTest.js",
@@ -152,7 +152,7 @@
     "webpack-bundle-analyzer": "^5.4.0",
     "webpack-cli": "^7.2.3",
     "webpack-dev-middleware": "^8.3.0",
-    "webpack-dev-server": "^5.2.5",
+    "webpack-dev-server": "^6.0.0",
     "xml-js": "^1.6.11",
     "xml2js": "^0.6.2",
     "yargs": "^18.2.0"
@@ -227,11 +227,6 @@
     "tough-cookie": "^6.0.2",
     "upng-js": "^2.1.0",
     "url-template": "^3.1.1"
-  },
-  "overrides": {
-    "sockjs": {
-      "uuid": "^11.1.1"
-    }
   },
   "browserslist": [
     "last 2 versions",
