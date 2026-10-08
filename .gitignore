@@ -39,3 +39,4 @@ config/default/release/layer-metadata
 /tasks/temp
 /test-results/
 
+config.bat
